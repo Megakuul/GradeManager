@@ -1,3 +1,10 @@
+//import 'dart:html';
+import 'dart:ffi';
+
+import './home.dart';
+import './semester.dart';
+import './settings.dart';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -30,11 +37,17 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPage extends State<MainPage> {
-  int _counter = 0;
+  final Map<int, Widget> _Pages = {
+    0: home(),
+    1: semester(),
+    2: settings()
+  };
 
-  void _incrementCounter() {
+  int _selectedBNBItem = 0;
+
+  void _changeBNBItem(int index) {
     setState(() {
-      _counter++;
+      _selectedBNBItem = index;
     });
   }
 
@@ -42,19 +55,28 @@ class _MainPage extends State<MainPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 36, 36, 62),
-                  Color.fromARGB(255, 20, 30, 48),
-                  Color.fromARGB(255, 15, 12, 41)
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight
-            ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        enableFeedback: true,
+        selectedItemColor: const Color.fromARGB(255, 20, 30, 48),
+        currentIndex: _selectedBNBItem,
+        onTap: _changeBNBItem,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_rounded),
+            label: 'Home',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_chart_rounded),
+            label: 'Semester'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings_rounded),
+            label: 'Settings'
+          )
+        ],
       ),
+      body: _Pages[_selectedBNBItem]
     );
   }
 }
