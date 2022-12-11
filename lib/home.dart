@@ -20,7 +20,7 @@ class _homeState extends State<home> {
           Padding(
             padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
             child: ImageIcon(
-              const AssetImage('assets/GM_white.png'),
+              const AssetImage('assets/icons/GM_white.png'),
               color: Colors.white,
               size: MediaQuery.of(context).size.shortestSide / 3,
             ),

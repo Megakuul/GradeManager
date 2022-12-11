@@ -1,5 +1,7 @@
 //import 'dart:html';
 import 'dart:ffi';
+import 'package:flutter/services.dart';
+import 'dart:convert';
 
 import './home.dart';
 import './semester.dart';
@@ -7,9 +9,20 @@ import './settings.dart';
 
 import 'package:flutter/material.dart';
 
+Map? config;
+
+void fetchConfig() async {
+  var configFile = await rootBundle.loadString("assets/config.gm");
+  config = const JsonDecoder().convert(configFile);
+}
+
 void main() {
   runApp(const MyApp());
 }
+
+//MainWidget//----------------------------------------|
+//MainWidget//----------------------------------------|
+//MainWidget//----------------------------------------|
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -27,6 +40,11 @@ class MyApp extends StatelessWidget {
   }
 }
 
+//MainWidget//----------------------------------------|
+//MainWidget//----------------------------------------|
+//MainWidget//----------------------------------------|
+
+
 class MainPage extends StatefulWidget {
   const MainPage({Key? key, required this.title}) : super(key: key);
 
@@ -36,7 +54,9 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPage();
 }
 
+
 class _MainPage extends State<MainPage> {
+
   final Map<int, Widget> _Pages = {
     0: home(),
     1: semester(),
@@ -49,6 +69,13 @@ class _MainPage extends State<MainPage> {
     setState(() {
       _selectedBNBItem = index;
     });
+  }
+
+  @override void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchConfig();
+
   }
 
   @override
